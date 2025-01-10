@@ -12,6 +12,8 @@
 //! This example transfers data via SPI.
 //! Connect SDI and SDO pins to see the outgoing data is read as incoming data.
 
+use std::time::Duration;
+
 use esp_idf_hal::delay::FreeRtos;
 use esp_idf_hal::peripherals::Peripherals;
 use esp_idf_hal::prelude::*;
@@ -50,7 +52,7 @@ fn main() -> anyhow::Result<()> {
 
     loop {
         // we are using thread::sleep here to make sure the watchdog isn't triggered
-        FreeRtos::delay_ms(500);
+        std::thread::sleep(Duration::from_millis(500));
         device_1.transfer(&mut read, &write)?;
         println!("Device 1: Wrote {write:x?}, read {read:x?}");
 
